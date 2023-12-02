@@ -11,7 +11,7 @@ export class ProfileController {
   @Get('me') 
   async getProfile(@Request() req) {
     const userId = req.user.userId;
-    console.log("enviado:", userId);
+    console.log("Entro al profile y envia:", userId);
     return this.profileService.getProfile(userId);
   }
 

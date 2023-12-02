@@ -1,4 +1,4 @@
-import { IsEmail, IsNotEmpty, IsString, MinLength, IsInt } from 'class-validator';
+import { IsEmail, IsNotEmpty, IsString, MinLength, IsInt, IsOptional } from 'class-validator';
 
 export class ChangePassword{
     @IsNotEmpty()
@@ -55,15 +55,44 @@ export class ResetPasswordDto {
     newPassword: string;
   }
   
-export class UpdateUserDto {
+  export class UpdateUserDto {
     @IsNotEmpty()
     @IsInt()
     userId: number;
 
-    @IsNotEmpty()
     @IsEmail()
+    @IsNotEmpty()
     email: string;
+
+    @IsOptional()
+    @IsString()
+    nickname: string;
+
+    @IsOptional()
+    @IsString()
+    first_name: string;
+
+    @IsOptional()
+    @IsString()
+    last_name: string;
+
+    @IsOptional()
+    @IsString()
+    job_position: string;
+
+    @IsOptional()
+    @IsString()
+    location: string;
+
+    @IsOptional()
+    @IsString()
+    profile_picture: string;
+
+    @IsOptional()
+    @IsString()
+    contact: string;
 }
+
 
 export class RequestPasswordResetDto {
     @IsNotEmpty()
