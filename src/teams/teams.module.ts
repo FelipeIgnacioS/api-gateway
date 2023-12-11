@@ -1,10 +1,15 @@
 import { Module } from '@nestjs/common';
-import { TeamsController } from './teams.controller';
-import { TeamsService } from './teams.service';
-import { HttpModule } from '@nestjs/axios'; // Importa HttpModule para hacer solicitudes HTTP
+import { HttpModule } from '@nestjs/axios'; 
 import { PassportModule } from '@nestjs/passport';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from 'src/jwt/jwt.strategy';
+import { TeamController } from './controller/team.controller';
+import { MemberController } from './controller/member.controller';
+import { InvitationController } from './controller/invitation.controller';
+import { TeamService } from './service/team.service';
+import { MemberService } from './service/member.service';
+import { InvitationService } from './service/invitation.service';
+
 
 @Module({
   imports: [HttpModule,
@@ -14,8 +19,8 @@ import { JwtStrategy } from 'src/jwt/jwt.strategy';
             signOptions: { expiresIn: '1h' },
         }),
     ], 
-  controllers: [TeamsController], 
-  providers: [TeamsService, JwtStrategy],
+  controllers: [TeamController, MemberController, InvitationController], 
+  providers: [TeamService, JwtStrategy, MemberService, InvitationService],
   exports: [PassportModule, JwtModule], 
 })
 export class TeamsModule {}

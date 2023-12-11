@@ -52,6 +52,7 @@ export class AuthController {
   async updateUser(@Request() req, @Body() updateUserDto: UpdateUserDto) {
     const userId = req.user.userId;
     updateUserDto.userId = userId;
+    console.log ("entro: ", updateUserDto);
     return this.authService.updateUser(updateUserDto);
   }
 
