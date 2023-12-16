@@ -15,6 +15,7 @@ export class ProjectController {
         return this.proyectService.createProyect(createProyectDto);
     }
 
+    //obtener un proyecto por id
     @UseGuards(JwtAuthGuard)
     @Get('get-project/:projectId')
     async getProyect(@Req() req) {
@@ -22,19 +23,25 @@ export class ProjectController {
         return this.proyectService.getProyect(projectId);
     }
 
+
+    //obtener todos los proyectos de un usuario
     @UseGuards(JwtAuthGuard)
-    @Get('get-projects/:userId')
+    @Get('get-projects')
     async getProjects(@Req() req) {
-        const proyectId = req.params.userId;
-        return this.proyectService.getProjects(proyectId);
+        const userId = req.user.userId;
+        return this.proyectService.getProjects(userId);
     }
 
+
+    //obtener todos los proyectos de un usuario en los que es dueño
     @UseGuards(JwtAuthGuard)
-    @Get('get-proyects-owner/:userId')
+    @Get('get-proyects-owner')
     async getProyectsOwner(@Req() req) {
-        const userId = req.params.userId;
+        const userId = req.user.userId;
         return this.proyectService.getProjectsOwner(userId);
     }
+
+
 
     @UseGuards(JwtAuthGuard)
     @Put('update-project')

@@ -34,3 +34,10 @@ export class DeleteMemberDto{
   idUser: number;
 }
 
+export class LeaveTeam{
+  @IsNumber()
+  readonly idTeam: number;
+
+  @IsNumber()
+  idUser: number;
+}

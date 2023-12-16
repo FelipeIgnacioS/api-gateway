@@ -16,7 +16,7 @@ import { InvitationService } from './service/invitation.service';
     PassportModule.register({ defaultStrategy: 'jwt' }),
         JwtModule.register({
             secret: 'futbolitos',
-            signOptions: { expiresIn: '1h' },
+            signOptions: { expiresIn: '10h' },
         }),
     ], 
   controllers: [TeamController, MemberController, InvitationController], 

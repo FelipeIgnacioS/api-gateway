@@ -11,7 +11,7 @@ import { TaskService } from './task.service';
       PassportModule.register({ defaultStrategy: 'jwt' }),
           JwtModule.register({
               secret: 'futbolitos',
-              signOptions: { expiresIn: '1h' },
+              signOptions: { expiresIn: '10h' },
           }),
       ], 
     controllers: [TaskController], 

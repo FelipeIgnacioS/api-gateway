@@ -2,6 +2,7 @@ import { AssignTeamToProjectDto, GetTeamsOfProyectDto, RemoveTeamFromProjectDto 
 import { Controller, Get, Post, Body, Param, Patch, Delete, Req, UseGuards } from '@nestjs/common';
 import { PrTeamService } from '../services/prTeam.service';
 import { JwtAuthGuard } from 'src/jwt/jwt-auth.guard';
+import { get } from 'http';
 
 @Controller('project-team')
 export class PrTeamController {
@@ -14,15 +15,17 @@ export class PrTeamController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('teams/:projectId')
+    @Get('teams/:idProject')
     async getTeamsOfProyect(@Param() getTeamsOfProyectDto: GetTeamsOfProyectDto) {
+
+        console.log("getTeamsOfProyectDto", getTeamsOfProyectDto.idProject);
         return this.prTeamService.getTeamsOfProyect(getTeamsOfProyectDto);
     }
 
     @UseGuards(JwtAuthGuard)
     @Get('projects/:teamId')
-    async getProjectsOfTeam(@Param() getProjectsOfTeamDto) {
-        return this.prTeamService.getProjectsOfTeam(getProjectsOfTeamDto);
+    async getProjectsOfTeam(@Param() teamId) {
+        return this.prTeamService.getProjectsOfTeam(teamId);
     }
 
     @UseGuards(JwtAuthGuard)

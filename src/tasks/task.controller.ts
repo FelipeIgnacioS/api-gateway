@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Patch, Delete, Body, Param, Query, UseGuards, Request } from '@nestjs/common';
 import { TaskService } from './task.service';
-import { CreateTaskDto, UpdateTaskDto, DeleteTaskDto, GetTasksDto } from "./dto";
+import { CreateTaskDto, UpdateTaskDto, DeleteTaskDto, GetTasksDto, AddCommentDto } from "./dto";
 import { JwtAuthGuard } from 'src/jwt/jwt-auth.guard';
 
 @Controller('tasks')
@@ -23,7 +23,8 @@ export class TaskController {
 
   @UseGuards(JwtAuthGuard)
   @Get()
-  async getTasks(@Query() query: GetTasksDto) {
+  async getTasks(@Query() query: GetTasksDto, @Request() req) {
+    query.userId = req.user.userId;
     return this.taskService.getTasks(query);
   }
 
@@ -46,5 +47,18 @@ export class TaskController {
   async deleteTask(@Request() req, @Body() deleteTaskDto: DeleteTaskDto) {
     deleteTaskDto.idUser = req.user.userId;
     return this.taskService.deleteTask(deleteTaskDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Post('/createComment')
+  async createComment(@Request() req, @Body() createCommentDto: AddCommentDto) {
+    createCommentDto.createdByUserId = req.user.userId;
+    return this.taskService.createComment(createCommentDto);
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('/getComments/:taskId')
+  async getComments(@Param('taskId') taskId: number) {
+    return this.taskService.getComments(taskId);
   }
 }

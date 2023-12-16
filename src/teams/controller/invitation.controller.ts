@@ -12,6 +12,7 @@ export class InvitationController {
     async createInvitation(@Request() req, @Body() createTeamInvitationDto: CreateTeamInvitationDto) {
         const userId = req.user.userId;
         createTeamInvitationDto.userId = userId;
+        console.log("llego al controller", createTeamInvitationDto)
         return this.invitationService.createInvitation(createTeamInvitationDto);
     }
 

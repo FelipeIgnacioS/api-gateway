@@ -92,4 +92,21 @@ export class MemberService {
                )
                .toPromise();
     }
+
+    async leaveTeam(deleteMemberDto: DeleteMemberDto) {
+        return this.httpService.delete(`${this.microserviceBaseUrl}/leave-team`, { data: deleteMemberDto })
+               .pipe(
+                   map(response => response.data),
+                   catchError(err => {
+                       throw new HttpException(
+                           {
+                               status: err.response.status,
+                               error: err.response.data
+                           },
+                           err.response.status
+                       );
+                   })
+               )
+               .toPromise();
+    }
 }

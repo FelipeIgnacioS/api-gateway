@@ -39,9 +39,17 @@ export class MemberController {
     }
 
     @UseGuards(JwtAuthGuard)
-    @Get('get-teams-user/:id')
+    @Get('get-teams-user')
     async getTeamsUser(@Request() req) {
-        const id = req.params.id;
+        const id = req.user.userId;
         return this.memberService.getTeamsUser(id);
+    }
+
+    @UseGuards(JwtAuthGuard)
+    @Delete('leave-team')
+    async leaveTeam(@Request() req, @Body() deleteMemberDto: DeleteMemberDto) {
+        const userId = req.user.userId;
+        deleteMemberDto.idUser = userId;
+        return this.memberService.leaveTeam(deleteMemberDto);
     }
 }

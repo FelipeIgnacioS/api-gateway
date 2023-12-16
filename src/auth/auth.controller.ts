@@ -66,4 +66,10 @@ export class AuthController {
     console.log("entro ",resetPasswordDto )
     return this.authService.resetPassword(resetPasswordDto);
   }
+  
+  @UseGuards(JwtAuthGuard)
+  @Post('verify-token')
+  async verifyToken(@Body() token: string) {
+    return { message: 'Token is valid.' }
+  }
 }

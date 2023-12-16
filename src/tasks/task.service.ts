@@ -1,7 +1,7 @@
 import { HttpException, Injectable } from '@nestjs/common';
 import { HttpService } from '@nestjs/axios';
 import { catchError, map } from 'rxjs/operators';
-import { CreateTaskDto, UpdateTaskDto, DeleteTaskDto, GetTasksDto } from './dto';
+import { CreateTaskDto, UpdateTaskDto, DeleteTaskDto, GetTasksDto, AddCommentDto } from './dto';
 
 @Injectable()
 export class TaskService {
@@ -98,6 +98,40 @@ export class TaskService {
 
     async getTasksOfProject(projectId: number){
         return this.httpService.get(`${this.microserviceBaseUrl}/get-tasks/${projectId}`)
+               .pipe(
+                   map(response => response.data),
+                   catchError(err => {
+                       throw new HttpException(
+                           {
+                               status: err.response.status,
+                               error: err.response.data
+                           },
+                           err.response.status
+                       );
+                   })
+               )
+               .toPromise();
+    }
+
+    async createComment(createCommentDto: AddCommentDto) {
+        return this.httpService.post(`${this.microserviceBaseUrl}/createComment`, createCommentDto)
+                .pipe(
+                    map(response => response.data),
+                    catchError(err => {
+                        throw new HttpException(
+                            {
+                                status: err.response.status,
+                                error: err.response.data
+                            },
+                            err.response.status
+                        );
+                    })
+                )
+               .toPromise();
+    }
+
+    async getComments(taskId: number){
+        return this.httpService.get(`${this.microserviceBaseUrl}/getComments/${taskId}`)
                .pipe(
                    map(response => response.data),
                    catchError(err => {

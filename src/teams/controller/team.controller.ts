@@ -32,6 +32,7 @@ export class TeamController {
     @Get('get-team-code/:code')
     async getTeamCode(@Request() req) {
         const code = req.params.code;
+        console.log(code);
         return this.teamService.getTeamCode(code);
     }
 

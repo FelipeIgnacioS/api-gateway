@@ -84,10 +84,28 @@ export class GetTasksDto {
     @IsOptional()
     @IsBoolean()
     myTasks?: boolean;
+
+    @IsInt()
+    @IsNotEmpty()
+    projectId: number;
   }
   
 export enum TaskStatus {
     Todo = 'TODO',
     InProgress = 'In_Progress',
     Done = 'DONE',
+}
+
+export class AddCommentDto{
+    @IsNotEmpty()
+    @IsInt()
+    idTask: number; 
+
+    @IsNotEmpty()
+    @IsString()
+    content: string;
+
+    @IsNotEmpty()
+    @IsInt()
+    createdByUserId : number;
 }

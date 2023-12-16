@@ -15,7 +15,7 @@ import { PrInvitationService } from './services/prInvitation.service';
       PassportModule.register({ defaultStrategy: 'jwt' }),
           JwtModule.register({
               secret: 'futbolitos',
-              signOptions: { expiresIn: '1h' },
+              signOptions: { expiresIn: '10h' },
           }),
       ], 
     controllers: [ProjectController, PrTeamController, PrInvitationController], 

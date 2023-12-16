@@ -26,21 +26,24 @@ export class InvitationService {
     }
 
     async getInvitations(userId: number) {
-        return this.httpService.get(`${this.microserviceBaseUrl}/get-invitations/${userId}`)
-               .pipe(
-                   map(response => response.data),
-                   catchError(err => {
-                       throw new HttpException(
-                           {
-                               status: err.response.status,
-                               error: err.response.data
-                           },
-                           err.response.status
-                       );
-                   })
-               )
-               .toPromise();
+        return this.httpService.get(`${this.microserviceBaseUrl}/get-invitations`, {
+            params: { id: userId }
+        })
+        .pipe(
+            map(response => response.data),
+            catchError(err => {
+                throw new HttpException(
+                    {
+                        status: err.response.status,
+                        error: err.response.data
+                    },
+                    err.response.status
+                );
+            })
+        )
+        .toPromise();
     }
+    
 
     async acceptInvitation(invitationId: number) {
         return this.httpService.patch(`${this.microserviceBaseUrl}/${invitationId}/accept`, {})
